@@ -65,7 +65,14 @@ app.post('/todos', async (req, res) => {
   ORDER BY id
   DESC LIMIT 1
   `)
-  res.json(rows)
+  const [updatedTodos] = await pool.query(
+    `
+  SELECT *
+  FROM todo
+  ORDER BY id DESC
+  `
+  );
+  res.json(updatedTodos);
 })
 
 app.get('/todos/:id/', async (req, res) => {
@@ -174,7 +181,7 @@ app.patch("/todos/check/:id", async (req, res) => {
 
   res.json(updatedTodos);
 });
-
+//할일
 app.delete("/todos/:id", async (req, res) => {
   const { id } = req.params;
 
